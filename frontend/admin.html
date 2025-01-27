@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Admin Panel</h1>
+
+        <!-- Create User/Admin Section -->
+        <section class="mb-5">
+            <h2>Create User/Admin</h2>
+            <form id="createUserForm">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" id="username" class="form-control" placeholder="Enter username" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" class="form-control" placeholder="Enter password" required>
+                </div>
+                <div class="mb-3">
+                    <label for="role" class="form-label">Role</label>
+                    <select id="role" class="form-select" required>
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Create</button>
+            </form>
+        </section>
+
+        <!-- Reviews Section -->
+        <section class="mb-5">
+            <h2>Manage Reviews</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>User</th>
+                        <th>City/Country</th>
+                        <th>Rating</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="reviewsTableBody">
+                    <!-- Reviews will be dynamically loaded here -->
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Scripts -->
+        <script>
+            document.getElementById('createUserForm').addEventListener('submit', async function(event) {
+                event.preventDefault();
+
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                const role = document.getElementById('role').value;
+
+                try {
+                    const response = await fetch('http://localhost:5000/api/admin/users', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json', 
+                            'Authorization': `Bearer ${localStorage.getItem('token')}`
+                        },
+                        body: JSON.stringify({ username, password, role })
+                    });
+
+                    const data = await response.json();
+                    if (response.ok) {
+                        alert('User/Admin created successfully');
+                    } else {
+                        alert(`Error: ${data.error}`);
+                    }
+                } catch (error) {
+                    console.error('Error creating user/admin:', error);
+                }
+            });
+
+            async function loadReviews() {
+                try {
+                    const response = await fetch('http://localhost:5000/api/reviews');
+                    const reviews = await response.json();
+
+                    const reviewsTableBody = document.getElementById('reviewsTableBody');
+                    reviewsTableBody.innerHTML = '';
+
+                    reviews.forEach(review => {
+                        const row = document.createElement('tr');
+
+                        row.innerHTML = `
+                            <td>${review._id}</td>
+                            <td>${review.user}</td>
+                            <td>${review.cityOrCountry}</td>
+                            <td>${review.rating}</td>
+                            <td>${review.description}</td>
+                            <td>
+                                <button class="btn btn-sm btn-warning" onclick="editReview('${review._id}')">Edit</button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteReview('${review._id}')">Delete</button>
+                            </td>
+                        `;
+
+                        reviewsTableBody.appendChild(row);
+                    });
+                } catch (error) {
+                    console.error('Error loading reviews:', error);
+                }
+            }
+
+            loadReviews();
+
+            async function deleteReview(id) {
+                try {
+                    const response = await fetch(`http://localhost:5000/api/admin/reviews/${id}`, {
+                        method: 'DELETE'
+                    });
+
+                    if (response.ok) {
+                        alert('Review deleted successfully');
+                        loadReviews();
+                    } else {
+                        const data = await response.json();
+                        alert(`Error: ${data.error}`);
+                    }
+                } catch (error) {
+                    console.error('Error deleting review:', error);
+                }
+            }
+
+            function editReview(id) {
+                // Implement edit functionality here
+                alert(`Edit functionality for review ${id} is not implemented yet.`);
+            }
+        </script>
+    </div>
+</body>
+</html>

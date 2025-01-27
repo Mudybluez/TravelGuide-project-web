@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&family=Poppins:wght@400;500&display=swap");
+
+        body {
+            background-image: url('./images/wallp2.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: 'Montserrat', 'Poppins', sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: white;
+            padding-top: 70px;
+
+
+        }
+
+        header {
+            background-color: transparent;
+            border: none;
+            box-shadow: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: transparent;
+            backdrop-filter: none;
+            transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
+            padding: 10px 0;
+
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: white;
+        }
+
+        header.scrolled {
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-link,
+        .navbar-brand {
+            color: white !important;
+            margin-right: 100px;
+            font-weight: bold;
+            font-size: 18px;
+            font-family: 'Montserrat', 'Poppins', sans-serif;
+        }
+
+        .navbar-brand {
+            margin-left: 100px;
+
+
+        }
+
+        .nav-link {
+            position: relative;
+            text-decoration: none;
+            color: white !important;
+        }
+
+        .nav-link:after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: white;
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: white !important;
+        }
+
+        .nav-link:hover:after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        .mt-7 {
+            margin-top: 120px;
+        }
+
+        .about-text {
+            font-size: 1.25rem;
+            padding: 0 50px;
+            line-height: 1.8;
+        }
+
+        .square-image {
+            width: 300px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .blurred-background {
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+        }
+
+
+        .large-photo-section {
+            padding: 100px 0;
+            background-color: white;
+            text-align: center;
+        }
+
+        .large-photo-section .image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .large-photo-section .large-image {
+            width: 50%;
+            max-width: 600px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .navbar-brand {
+                font-size: 1.2rem;
+            }
+
+            .nav-link {
+                font-size: 0.9rem;
+                margin-right: 10px;
+            }
+
+            .about-text {
+                font-size: 1rem;
+                padding: 0 20px;
+            }
+
+            .large-photo-section .large-image {
+                width: 80%;
+                max-width: 400px;
+            }
+
+            .reviews-container {
+                padding: 20px;
+            }
+
+            .review-form {
+                padding: 20px;
+            }
+        }
+
+
+        @media (max-width: 480px) {
+            .navbar-brand {
+                font-size: 1.1rem;
+            }
+
+            .nav-link {
+                font-size: 0.8rem;
+                margin-right: 5px;
+            }
+
+            .about-text {
+                font-size: 0.9rem;
+                padding: 0 15px;
+            }
+
+            .large-photo-section .large-image {
+                width: 90%;
+                max-width: 300px;
+            }
+
+            .reviews-container {
+                max-height: none;
+            }
+        }
+
+
+        footer {
+            text-align: center;
+            margin-top: auto;
+        }
+
+
+        footer .social-icon {
+            font-size: 22px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-5">
+        <div class="col-md-3 mb-2 mb-md-0">
+            <a href="login.html" class="d-inline-flex link-body-emphasis text-decoration-none">
+                <span class="navbar-brand text-white">Travel</span>
+            </a>
+        </div>
+
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="homepage.html" class="nav-link px-2 link-light">Home</a></li>
+            <li><a href="about.html" class="nav-link px-2 link-light">About</a></li>
+            <li><a href="popular.html" class="nav-link px-2 link-light">Popular</a></li>
+            <li><a href="help.html" class="nav-link px-2 link-light">Help</a></li>
+            <li><a href="quiz.html" class="nav-link px-2 link-light">Quiz</a></li>
+        </ul>
+    </header>
+
+    <div class="container mt-7 blurred-background">
+        <h1 class="display-4 text-center mt-5">About our project:</h1>
+        <p class="lead text-center about-text">We, second-year students of AITU, created a website on the topic of
+            travel! Our project is a guidebook containing tips, routes, and reviews of the places we dream of visiting.
+            Here you will find useful information about attractions, ideal travel routes, as well as personal
+            impressions and reviews. Our site was created to help you get inspired for new trips and discover more
+            wonderful places in the world.</p>
+    </div>
+
+    =<div class="large-photo-section">
+        <h1 class="display-4 text-center mt-2 text-black">Creators:</h1> <br> <br>
+        <div class="image-container">
+            <img src="./images/we.jpg" alt="Travel Image" class="large-image">
+        </div>
+    </div>
+
+    <div class="container-fluid py-5" style="background-color: #1a2a5a;">
+        <div class="row align-items-center">
+            <div class="col-md-6 text-center">
+                <img src="./images/kolya.JPG" alt="Kamila Nurlybaeva" class="img-fluid rounded-circle shadow-lg"
+                    style="max-width: 300px;">
+            </div>
+            <div class="col-md-5 text-white text-center text-md-start">
+                <h2 class="display-5">Kamila Nurlybaeva</h2>
+                <p class="lead">Driven and dedicated leader.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid py-5" style="background-color: #ffffff;">
+        <div class="row align-items-center flex-md-row-reverse">
+            <div class="col-md-5 text-center">
+                <img src="./images/lada.JPG" alt="Mulkulanova Lada" class="img-fluid rounded-circle shadow-lg"
+                    style="max-width: 300px;">
+            </div>
+            <div class="col-md-6 text-dark text-center text-md-end">
+                <h2 class="display-5">Mulkulanova Lada</h2>
+                <p class="lead">Creative and enthusiastic team member.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid py-5" style="background-color: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px);">
+        <h1 class="display-4 text-center mb-5" style="color: #1a2a5a; font-weight: bold;">Reviews from our clients:</h1>
+
+        <div class="d-flex justify-content-center flex-wrap gap-4 mb-5">
+
+            <div class="card shadow-lg" style="width: 350px; border-radius: 15px;">
+                <img src="./images/man.jpg" alt="User Photo" class="card-img-top"
+                    style="height: 200px; object-fit: cover; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+                <div class="card-body text-center">
+                    <h4 class="card-title" style="color: #1a2a5a;">John Doe</h4>
+                    <p class="text-muted">November 12, 2024</p>
+                    <div class="text-warning mb-2">★★★★☆</div>
+                    <p class="card-text" style="color: #1a2a5a;">"This travel guide made my trip unforgettable! Highly
+                        recommend to all travel enthusiasts!"</p>
+                </div>
+            </div>
+
+            <div class="card shadow-lg" style="width: 350px; border-radius: 15px;">
+                <img src="./images/wom1.jpg" alt="User Photo" class="card-img-top"
+                    style="height: 200px; object-fit: cover; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+                <div class="card-body text-center">
+                    <h4 class="card-title" style="color: #1a2a5a;">Jane Smith</h4>
+                    <p class="text-muted">November 10, 2024</p>
+                    <div class="text-warning mb-2">★★★★★</div>
+                    <p class="card-text" style="color: #1a2a5a;">"Fantastic tips and routes! This site is a must-visit
+                        for anyone planning a vacation."</p>
+                </div>
+            </div>
+
+
+            <div class="card shadow-lg" style="width: 350px; border-radius: 15px;">
+                <img src="./images/wom2.jpg" alt="User Photo" class="card-img-top"
+                    style="height: 200px; object-fit: cover; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+                <div class="card-body text-center">
+                    <h4 class="card-title" style="color: #1a2a5a;">Emily Davis</h4>
+                    <p class="text-muted">November 7, 2024</p>
+                    <div class="text-warning mb-2">★★★★☆</div>
+                    <p class="card-text" style="color: #1a2a5a;">"I loved the budget travel tips. Helped me save a lot
+                        while enjoying my trip!"</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container mt-5">
+            <h2 class="display-5 text-center mb-4" style="color: #1a2a5a;">User Reviews</h2>
+
+            <div class="reviews-container border p-4 rounded"
+                style="background-color: #f8f9fa; max-height: 400px; overflow-y: auto;">
+
+                <div class="review mb-4 p-3 border-bottom">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0" style="color: #1a2a5a;">John Doe</h5>
+                        <small class="text-muted">November 12, 2024</small>
+                    </div>
+                    <div class="stars text-warning mt-1">
+                        ★★★★☆
+                    </div>
+                    <p class="mt-2" style="color: #1a2a5a;">Amazing guide! It helped me plan my trip to Europe
+                        seamlessly. Highly recommend!</p>
+                </div>
+
+
+                <div class="review mb-4 p-3 border-bottom">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0" style="color: #1a2a5a;">Jane Smith</h5>
+                        <small class="text-muted">November 10, 2024</small>
+                    </div>
+                    <div class="stars text-warning mt-1">
+                        ★★★★★
+                    </div>
+                    <p class="mt-2" style="color: #1a2a5a;">The tips and routes shared on this website are fantastic.
+                        Can't wait to explore more!</p>
+                </div>
+
+
+                <div class="review mb-4 p-3 border-bottom">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0" style="color: #1a2a5a;">Michael Brown</h5>
+                        <small class="text-muted">November 8, 2024</small>
+                    </div>
+                    <div class="stars text-warning mt-1">
+                        ★★★☆☆
+                    </div>
+                    <p class="mt-2" style="color: #1a2a5a;">Good resource, but I would like to see more detailed routes
+                        for Asia. Otherwise, great work!</p>
+                </div>
+
+
+                <div class="review mb-4 p-3 border-bottom">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0" style="color: #1a2a5a;">Emily Davis</h5>
+                        <small class="text-muted">November 7, 2024</small>
+                    </div>
+                    <div class="stars text-warning mt-1">
+                        ★★★★☆
+                    </div>
+                    <p class="mt-2" style="color: #1a2a5a;">Very helpful! The tips for budgeting during travel are
+                        especially useful. Keep it up!</p>
+                </div>
+            </div>
+
+
+            <div class="review-form mt-4 p-4 rounded" style="background-color: #1a2a5a; color: white;">
+                <h3 class="mb-3">Write a Review</h3>
+                <form id="reviewForm">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Your Name</label>
+                        <input type="text" id="username" class="form-control" placeholder="Enter your name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="stars" class="form-label">Rating</label>
+                        <select id="stars" class="form-select" required>
+                            <option value="5">★★★★★</option>
+                            <option value="4">★★★★☆</option>
+                            <option value="3">★★★☆☆</option>
+                            <option value="2">★★☆☆☆</option>
+                            <option value="1">★☆☆☆☆</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="reviewText" class="form-label">Your Review</label>
+                        <textarea id="reviewText" class="form-control" rows="3" placeholder="Write your review..."
+                            required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-light">Submit Review</button>
+                </form>
+                <script>
+
+                    document.getElementById('reviewForm').addEventListener('submit', function (e) {
+                        e.preventDefault();
+                        const username = document.getElementById('username').value;
+                        const stars = document.getElementById('stars').value;
+                        const reviewText = document.getElementById('reviewText').value;
+                        const reviewsContainer = document.querySelector('.reviews-container');
+                        const newReview = document.createElement('div');
+                        newReview.classList.add('review', 'mb-4', 'p-3', 'border-bottom');
+                        newReview.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0" style="color: #1a2a5a;">${username}</h5>
+                        <small class="text-muted">${new Date().toLocaleDateString()}</small>
+                    </div>
+                    <div class="stars text-warning mt-1">
+                        ${'★'.repeat(stars)}${'☆'.repeat(5 - stars)}
+                    </div>
+                    <p class="mt-2" style="color: #1a2a5a;">${reviewText}</p>
+                `;
+                        reviewsContainer.prepend(newReview);
+
+                        document.getElementById('reviewForm').reset();
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-white text-dark py-4">
+        <div class="container">
+            <div class="row text-center align-items-center">
+
+                <div class="col-12 mb-3">
+                    <p class="text-black" style="font-size: 24px; font-weight: bold; margin-bottom: 0;">
+                        Thank you for staying with us!
+                    </p>
+                </div>
+
+
+                <div class="col-md-6 mb-3 d-flex flex-column align-items-center">
+                    <h5>Contact Us</h5>
+                    <ul class="list-unstyled d-flex justify-content-center mb-0">
+                        <li class="mx-3">
+                            <a href="mailto:lada15mulk@gmail.com" class="text-dark">
+                                <i class="bi bi-envelope" style="font-size: 24px;"></i>
+                            </a>
+                        </li>
+                        <li class="mx-3">
+                            <a href="tel:+77083849343" class="text-dark">
+                                <i class="bi bi-telephone" style="font-size: 24px;"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+
+                <div class="col-md-6 mb-3 d-flex flex-column align-items-center">
+                    <h5>Follow us on:</h5>
+                    <div class="d-flex justify-content-center">
+                        <a href="https://www.instagram.com/mestriw" target="_blank" class="social-icon text-dark mx-3">
+                            <i class="bi bi-instagram" style="font-size: 24px;"></i>
+                        </a>
+                        <a href="https://t.me/mestriw" target="_blank" class="social-icon text-dark mx-3">
+                            <i class="bi bi-telegram" style="font-size: 24px;"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container px-0 text-center mt-5">
+            <p class="text-dark" style="font-size: 15px; font-weight: bold;">
+                Mulkulanova Lada, Nurlybayeva Kamila
+            </p>
+        </div>
+
+
+        <div class="container text-center mt-2">
+            <p class="text-center text-muted" style="margin-bottom: 0;"></p>
+            &copy; 2024 Travel Website. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <script>
+
+        window.addEventListener('scroll', function () {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    </script>
+
+
+</html>
