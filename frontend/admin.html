@@ -4,140 +4,415 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        table th {
+            background-color: #f4f4f4;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .form-container {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+    </style>
 </head>
 <body>
-    <div class="container mt-5">
-        <h1 class="text-center mb-4">Admin Panel</h1>
 
-        <!-- Create User/Admin Section -->
-        <section class="mb-5">
-            <h2>Create User/Admin</h2>
-            <form id="createUserForm">
-                <div class="mb-3">
-                    <label for="username" class="form-label">Username</label>
-                    <input type="text" id="username" class="form-control" placeholder="Enter username" required>
-                </div>
-                <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" id="password" class="form-control" placeholder="Enter password" required>
-                </div>
-                <div class="mb-3">
-                    <label for="role" class="form-label">Role</label>
-                    <select id="role" class="form-select" required>
-                        <option value="user">User</option>
-                        <option value="admin">Admin</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary">Create</button>
-            </form>
-        </section>
+<div class="container">
+    <h1>Admin Panel</h1>
 
-        <!-- Reviews Section -->
-        <section class="mb-5">
-            <h2>Manage Reviews</h2>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>User</th>
-                        <th>City/Country</th>
-                        <th>Rating</th>
-                        <th>Description</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="reviewsTableBody">
-                    <!-- Reviews will be dynamically loaded here -->
-                </tbody>
-            </table>
-        </section>
+    <div id="admin-panel" class="hidden">
+        <h2>Users</h2>
+        <table id="users-table">
+            <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>User ID</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Users data will be dynamically added here -->
+            </tbody>
+        </table>
 
-        <!-- Scripts -->
-        <script>
-            document.getElementById('createUserForm').addEventListener('submit', async function(event) {
-                event.preventDefault();
+        <div class="form-container">
+            <h3>Add/Update User</h3>
+            <div class="form-group">
+                <label for="user-username">Username</label>
+                <input type="text" id="user-username" placeholder="Enter username">
+            </div>
+            <div class="form-group">
+                <label for="user-email">Email</label>
+                <input type="email" id="user-email" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+                <label for="user-password">Password</label>
+                <input type="password" id="user-password" placeholder="Enter password">
+            </div>
+            <div class="form-group">
+                <label for="user-role">Role</label>
+                <select id="user-role">
+                    <option value="admin">Admin</option>
+                    <option value="guest">Guest</option>
+                </select>
+            </div>
+            <button id="save-user-btn" class="btn">Save User</button>
+        </div>
 
-                const username = document.getElementById('username').value;
-                const password = document.getElementById('password').value;
-                const role = document.getElementById('role').value;
+        <h2>Reviews</h2>
+        <table id="reviews-table">
+            <thead>
+            <tr>
+                <th>City/Country</th>
+                <th>Rating</th>
+                <th>Description</th>
+                <th>User</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Reviews data will be dynamically added here -->
+            </tbody>
+        </table>
 
-                try {
-                    const response = await fetch('http://localhost:5000/api/admin/users', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json', 
-                            'Authorization': `Bearer ${localStorage.getItem('token')}`
-                        },
-                        body: JSON.stringify({ username, password, role })
-                    });
+        <div class="form-container">
+            <h3>Add/Update Review</h3>
+            <div class="form-group">
+                <label for="review-city">City or Country</label>
+                <input type="text" id="review-city" placeholder="Enter city or country">
+            </div>
+            <div class="form-group">
+                <label for="review-rating">Rating</label>
+                <input type="number" id="review-rating" placeholder="Enter rating (1-5)" min="1" max="5">
+            </div>
+            <div class="form-group">
+                <label for="review-description">Description</label>
+                <input type="text" id="review-description" placeholder="Enter description">
+            </div>
+            <div class="form-group">
+                <label for="review-user">User ID</label>
+                <input type="text" id="review-user" placeholder="Enter user ID">
+            </div>
+            <button id="save-review-btn" class="btn">Save Review</button>
+        </div>
+    </div>
 
-                    const data = await response.json();
-                    if (response.ok) {
-                        alert('User/Admin created successfully');
-                    } else {
-                        alert(`Error: ${data.error}`);
-                    }
-                } catch (error) {
-                    console.error('Error creating user/admin:', error);
-                }
+    <div id="guest-panel" class="hidden">
+        <h2>Your Reviews</h2>
+        <table id="guest-reviews-table">
+            <thead>
+            <tr>
+                <th>City/Country</th>
+                <th>Rating</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Guest reviews data will be dynamically added here -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    async function loadUserData() {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            alert('You are not authorized. Please log in.');
+            window.location.href = 'login.html';
+            return;
+        }
+
+        const response = await fetch('http://localhost:5000/api/auth/me', {
+            headers: {
+                'Authorization': token
+            }
+        });
+
+        if (!response.ok) {
+            console.error('Failed to fetch user data');
+            return;
+        }
+
+        const user = await response.json();
+
+        if (user.role === 'admin') {
+            document.getElementById('admin-panel').classList.remove('hidden');
+            loadAdminData();
+        } else if (user.role === 'guest') {
+            document.getElementById('guest-panel').classList.remove('hidden');
+            loadGuestReviews(user._id);
+        } else {
+            alert('Unknown user role.');
+        }
+    }
+
+    async function loadAdminData() {
+        try {
+            const usersResponse = await fetch('http://localhost:5000/api/admin/users', {
+                headers: { 'Authorization': localStorage.getItem('token') }
+            });
+            if (!usersResponse.ok) {
+                throw new Error('Failed to fetch users');
+            }
+            const users = await usersResponse.json();
+
+            const reviewsResponse = await fetch('http://localhost:5000/api/admin/reviews', {
+                headers: { 'Authorization': localStorage.getItem('token') }
+            });
+            if (!reviewsResponse.ok) {
+                throw new Error('Failed to fetch reviews');
+            }
+            const reviews = await reviewsResponse.json();
+
+            populateTable('users-table', users, ['username', 'email', 'role', '_id']);
+            populateTable('reviews-table', reviews, ['cityOrCountry', 'rating', 'description', 'user.username']);
+        } catch (err) {
+            console.error('Error loading admin data:', err);
+        }
+    }
+
+    function populateTable(tableId, data, fields) {
+        const tableBody = document.getElementById(tableId).querySelector('tbody');
+        tableBody.innerHTML = '';
+
+        data.forEach(item => {
+            const row = document.createElement('tr');
+
+            fields.forEach(field => {
+                const cell = document.createElement('td');
+                const fieldParts = field.split('.');
+                let value = item;
+                fieldParts.forEach(part => {
+                    value = value ? value[part] : '';
+                });
+                cell.textContent = value;
+                row.appendChild(cell);
             });
 
-            async function loadReviews() {
-                try {
-                    const response = await fetch('http://localhost:5000/api/reviews');
-                    const reviews = await response.json();
+            const actionsCell = document.createElement('td');
+            actionsCell.innerHTML = `<button class="btn edit-btn" data-id="${item._id}">Edit</button> <button class="btn delete-btn" data-id="${item._id}">Delete</button>`;
+            row.appendChild(actionsCell);
 
-                    const reviewsTableBody = document.getElementById('reviewsTableBody');
-                    reviewsTableBody.innerHTML = '';
+            tableBody.appendChild(row);
+        });
 
-                    reviews.forEach(review => {
-                        const row = document.createElement('tr');
+        // Add event listeners for edit buttons
+        document.querySelectorAll('.edit-btn').forEach(button => {
+            button.addEventListener('click', handleEdit);
+        });
 
-                        row.innerHTML = `
-                            <td>${review._id}</td>
-                            <td>${review.user}</td>
-                            <td>${review.cityOrCountry}</td>
-                            <td>${review.rating}</td>
-                            <td>${review.description}</td>
-                            <td>
-                                <button class="btn btn-sm btn-warning" onclick="editReview('${review._id}')">Edit</button>
-                                <button class="btn btn-sm btn-danger" onclick="deleteReview('${review._id}')">Delete</button>
-                            </td>
-                        `;
+        // Add event listeners for delete buttons
+        document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', handleDelete);
+        });
+    }
 
-                        reviewsTableBody.appendChild(row);
-                    });
-                } catch (error) {
-                    console.error('Error loading reviews:', error);
-                }
+    async function handleEdit(event) {
+        const id = event.target.dataset.id;
+        const tableId = event.target.closest('table').id;
+
+        if (tableId === 'users-table') {
+            // Fetch user data and populate form for editing
+            const response = await fetch(`http://localhost:5000/api/admin/users/${id}`, {
+                headers: { 'Authorization': localStorage.getItem('token') }
+            });
+            const user = await response.json();
+            // Populate form with user data
+            document.getElementById('user-username').value = user.username;
+            document.getElementById('user-email').value = user.email;
+            document.getElementById('user-role').value = user.role;
+            document.getElementById('save-user-btn').dataset.id = user._id;
+            console.log(`Edit user with id: ${id}`, user);
+        } else if (tableId === 'reviews-table') {
+            // Fetch review data and populate form for editing
+            const response = await fetch(`http://localhost:5000/api/admin/reviews/${id}`, {
+                headers: { 'Authorization': localStorage.getItem('token') }
+            });
+            if (!response.ok) {
+                console.error('Failed to fetch review');
+                return;
             }
+            const review = await response.json();
+            // Populate form with review data
+            document.getElementById('review-city').value = review.cityOrCountry;
+            document.getElementById('review-rating').value = review.rating;
+            document.getElementById('review-description').value = review.description;
+            document.getElementById('review-user').value = review.user._id;
+            document.getElementById('save-review-btn').dataset.id = review._id;
+            console.log(`Edit review with id: ${id}`, review);
+        }
+    }
 
-            loadReviews();
+    async function handleDelete(event) {
+        const id = event.target.dataset.id;
+        const tableId = event.target.closest('table').id;
 
-            async function deleteReview(id) {
-                try {
-                    const response = await fetch(`http://localhost:5000/api/admin/reviews/${id}`, {
-                        method: 'DELETE'
-                    });
-
-                    if (response.ok) {
-                        alert('Review deleted successfully');
-                        loadReviews();
-                    } else {
-                        const data = await response.json();
-                        alert(`Error: ${data.error}`);
-                    }
-                } catch (error) {
-                    console.error('Error deleting review:', error);
-                }
+        if (tableId === 'users-table') {
+            // Delete user
+            const response = await fetch(`http://localhost:5000/api/admin/users/${id}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': localStorage.getItem('token') }
+            });
+            if (response.ok) {
+                loadAdminData();
+            } else {
+                console.error('Failed to delete user');
             }
-
-            function editReview(id) {
-                // Implement edit functionality here
-                alert(`Edit functionality for review ${id} is not implemented yet.`);
+        } else if (tableId === 'reviews-table') {
+            // Delete review
+            const response = await fetch(`http://localhost:5000/api/admin/reviews/${id}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': localStorage.getItem('token') }
+            });
+            if (response.ok) {
+                loadAdminData();
+            } else {
+                console.error('Failed to delete review');
             }
-        </script>
-    </div>
+        }
+    }
+
+    document.getElementById('save-user-btn').addEventListener('click', async function() {
+        const username = document.getElementById('user-username').value;
+        const email = document.getElementById('user-email').value;
+        const password = document.getElementById('user-password').value;
+        const role = document.getElementById('user-role').value;
+        const id = this.dataset.id;
+
+        const userData = { username, email, password, role };
+
+        const method = id ? 'PUT' : 'POST';
+        const url = id ? `http://localhost:5000/api/admin/users/${id}` : 'http://localhost:5000/api/admin/users';
+
+        const response = await fetch(url, {
+            method,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('token')
+            },
+            body: JSON.stringify(userData)
+        });
+
+        if (response.ok) {
+            loadAdminData();
+            document.getElementById('user-username').value = '';
+            document.getElementById('user-email').value = '';
+            document.getElementById('user-password').value = '';
+            document.getElementById('user-role').value = 'guest';
+            delete this.dataset.id;
+        } else {
+            console.error('Failed to save user');
+        }
+    });
+
+    document.getElementById('save-review-btn').addEventListener('click', async function() {
+        const cityOrCountry = document.getElementById('review-city').value;
+        const rating = document.getElementById('review-rating').value;
+        const description = document.getElementById('review-description').value;
+        const user = document.getElementById('review-user').value;
+        const id = this.dataset.id;
+
+        const reviewData = { cityOrCountry, rating, description, user };
+
+        const method = id ? 'PUT' : 'POST';
+        const url = id ? `http://localhost:5000/api/admin/reviews/${id}` : 'http://localhost:5000/api/admin/reviews';
+
+        const response = await fetch(url, {
+            method,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('token')
+            },
+            body: JSON.stringify(reviewData)
+        });
+
+        if (response.ok) {
+            loadAdminData();
+            document.getElementById('review-city').value = '';
+            document.getElementById('review-rating').value = '';
+            document.getElementById('review-description').value = '';
+            document.getElementById('review-user').value = '';
+            delete this.dataset.id;
+        } else {
+            console.error('Failed to save review');
+        }
+    });
+
+    loadUserData();
+</script>
 </body>
 </html>
