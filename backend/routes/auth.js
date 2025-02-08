@@ -19,10 +19,33 @@ const transporter = nodemailer.createTransport({
 router.post('/register', async (req, res) => {
     const { username, password, email, role } = req.body;
     try {
+        // Проверка на существование пользователя с таким же именем или email
+        const existingUser = await User.findOne({ $or: [{ username }, { email }] });
+        if (existingUser) {
+            return res.status(400).json({ error: 'Username or email already exists' });
+        }
+
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = await User.create({ username, password: hashedPassword, email, role });
-        res.status(201).json(newUser);
+        const code = Math.floor(100000 + Math.random() * 900000).toString(); // Генерация 6-значного кода
+        const newUser = await User.create({ username, password: hashedPassword, email, role, code });
+
+        const mailOptions = {
+            from: process.env.EMAIL_USER,
+            to: email,
+            subject: 'Your verification code',
+            text: `Your verification code is ${code}`
+        };
+
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                console.error('Error sending email:', error);
+                return res.status(500).json({ error: error.message });
+            } else {
+                res.status(201).json({ message: 'User registered. Verification code sent to email.' });
+            }
+        });
     } catch (error) {
+        console.error('Error during registration:', error);
         res.status(400).json({ error: error.message });
     }
 });
@@ -38,8 +61,12 @@ router.post('/login', async (req, res) => {
         if (!isMatch) return res.status(401).json({ error: 'Invalid credentials' });
 
         const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        user.sessionToken = token;
+        await user.save();
+
         res.json({ token, role: user.role });
     } catch (error) {
+        console.error('Error during login:', error);
         res.status(400).json({ error: error.message });
     }
 });
@@ -84,7 +111,7 @@ router.post('/send-code', async (req, res) => {
     }
 });
 
-// Проверка кода
+// Верификация кода
 router.post('/verify-code', async (req, res) => {
     const { email, code } = req.body;
     try {
@@ -92,6 +119,10 @@ router.post('/verify-code', async (req, res) => {
         if (!user) return res.status(400).json({ error: 'Invalid code' });
 
         const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        user.sessionToken = token;
+        user.code = null; // Очистка кода после успешной верификации
+        await user.save();
+
         res.json({ token, role: user.role });
     } catch (error) {
         res.status(500).json({ error: error.message });

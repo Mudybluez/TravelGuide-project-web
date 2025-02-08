@@ -73,6 +73,19 @@
                     <p>Already have an account?<a href="#" class="signInBtn-link">Sign In</a></p>
                 </div>
             </form>
+
+            <form id="verifyCodeForm" style="display:none;">
+                <h2>Verify Code</h2>
+                <div class="input-group">
+                    <input type="email" id="verify-email" required>
+                    <label for="verify-email">Email</label>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="verify-code" required>
+                    <label for="verify-code">Verification Code</label>
+                </div>
+                <button type="submit">Verify</button>
+            </form>
         </div>
     </div>
     
@@ -109,68 +122,61 @@
             const email = document.getElementById('register-email').value;
             const password = document.getElementById('register-password').value;
 
-            const response = await fetch('http://localhost:5000/api/auth/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ username, email, password })
-            });
+            try {
+                const response = await fetch('http://localhost:5000/api/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, email, password })
+                });
 
-            const data = await response.json();
-            if (data._id) {
-                alert('Registration successful');
-                document.querySelector('.signInBtn-link').click();
-            } else {
-                alert('Registration failed');
-            }
-        });
-
-        document.getElementById('sendCodeForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const email = document.getElementById('email').value;
-
-            const response = await fetch('http://localhost:5000/api/auth/send-code', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ email })
-            });
-
-            const data = await response.json();
-            if (data.message) {
-                alert('Code sent to email');
-            } else {
-                alert('Failed to send code');
+                const data = await response.json();
+                if (data.message) {
+                    alert('Registration successful. Verification code sent to email.');
+                    document.getElementById('registerForm').style.display = 'none';
+                    document.getElementById('verifyCodeForm').style.display = 'block';
+                    document.getElementById('verify-email').value = email;
+                } else {
+                    alert('Registration failed: ' + data.error);
+                }
+            } catch (error) {
+                console.error('Error during registration:', error);
+                alert('Registration failed: ' + error.message);
             }
         });
 
         document.getElementById('verifyCodeForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            const email = document.getElementById('email').value;
-            const code = document.getElementById('code').value;
+            const email = document.getElementById('verify-email').value;
+            const code = document.getElementById('verify-code').value;
 
-            const response = await fetch('http://localhost:5000/api/auth/verify-code', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ email, code })
-            });
+            try {
+                const response = await fetch('http://localhost:5000/api/auth/verify-code', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, code })
+                });
 
-            const data = await response.json();
-            if (data.token) {
-                localStorage.setItem('token', `Bearer ${data.token}`);
-                if (data.role === 'admin') {
-                    window.location.href = 'admin.html';
+                const data = await response.json();
+                if (data.token) {
+                    localStorage.setItem('token', `Bearer ${data.token}`);
+                    if (data.role === 'admin') {
+                        window.location.href = 'admin.html';
+                    } else {
+                        window.location.href = 'homepage.html';
+                    }
                 } else {
-                    window.location.href = 'homepage.html';
+                    alert('Invalid code');
                 }
-            } else {
-                alert('Invalid code');
+            } catch (error) {
+                console.error('Error during code verification:', error);
+                alert('Verification failed: ' + error.message);
             }
         });
+        
     </script>
     <script src="js/script.js"></script>
 </body>

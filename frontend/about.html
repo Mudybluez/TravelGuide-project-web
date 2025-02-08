@@ -21,8 +21,6 @@
             line-height: 1.6;
             color: white;
             padding-top: 70px;
-
-
         }
 
         header {
@@ -38,7 +36,6 @@
             backdrop-filter: none;
             transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
             padding: 10px 0;
-
         }
 
         .nav-link {
@@ -62,8 +59,6 @@
 
         .navbar-brand {
             margin-left: 100px;
-
-
         }
 
         .nav-link {
@@ -121,7 +116,6 @@
             border-radius: 10px;
         }
 
-
         .large-photo-section {
             padding: 100px 0;
             background-color: white;
@@ -171,7 +165,6 @@
             }
         }
 
-
         @media (max-width: 480px) {
             .navbar-brand {
                 font-size: 1.1rem;
@@ -197,15 +190,108 @@
             }
         }
 
-
         footer {
             text-align: center;
             margin-top: auto;
         }
 
-
         footer .social-icon {
             font-size: 22px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .review-form {
+            margin-top: 20px;
+        }
+
+        .review-form h3 {
+            margin-bottom: 20px;
+        }
+
+        .review-form .form-group {
+            margin-bottom: 15px;
+        }
+
+        .review-form .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .review-form .form-group input,
+        .review-form .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .review-form button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .review-form button:hover {
+            background-color: #0056b3;
+        }
+
+        .reviews-container {
+            margin-top: 20px;
+        }
+
+        .review {
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .review h5 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .review .stars {
+            color: #FFD700;
+        }
+
+        .review p {
+            margin: 10px 0 0;
+            color: #555;
+        }
+
+        .pagination {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .pagination button {
+            padding: 10px 15px;
+            margin: 0 5px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            cursor: pointer;
+        }
+
+        .pagination button.active {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .pagination button:hover {
+            background-color: #0056b3;
+            color: #fff;
         }
     </style>
 </head>
@@ -228,16 +314,16 @@
         </ul>
     </header>
 
-    <div class="container mt-7 blurred-background">
+   
         <h1 class="display-4 text-center mt-5">About our project:</h1>
         <p class="lead text-center about-text">We, second-year students of AITU, created a website on the topic of
             travel! Our project is a guidebook containing tips, routes, and reviews of the places we dream of visiting.
             Here you will find useful information about attractions, ideal travel routes, as well as personal
             impressions and reviews. Our site was created to help you get inspired for new trips and discover more
             wonderful places in the world.</p>
-    </div>
+      
 
-    =<div class="large-photo-section">
+    <div class="large-photo-section">
         <h1 class="display-4 text-center mt-2 text-black">Creators:</h1> <br> <br>
         <div class="image-container">
             <img src="./images/we.jpg" alt="Travel Image" class="large-image">
@@ -256,7 +342,6 @@
             </div>
         </div>
     </div>
-
 
     <div class="container-fluid py-5" style="background-color: #ffffff;">
         <div class="row align-items-center flex-md-row-reverse">
@@ -300,7 +385,6 @@
                 </div>
             </div>
 
-
             <div class="card shadow-lg" style="width: 350px; border-radius: 15px;">
                 <img src="./images/wom2.jpg" alt="User Photo" class="card-img-top"
                     style="height: 200px; object-fit: cover; border-top-left-radius: 15px; border-top-right-radius: 15px;">
@@ -314,76 +398,17 @@
             </div>
         </div>
 
-
-        <div class="container mt-5">
-            <h2 class="display-5 text-center mb-4" style="color: #1a2a5a;">User Reviews</h2>
-
-            <div class="reviews-container border p-4 rounded"
-                style="background-color: #f8f9fa; max-height: 400px; overflow-y: auto;">
-
-                <div class="review mb-4 p-3 border-bottom">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0" style="color: #1a2a5a;">John Doe</h5>
-                        <small class="text-muted">November 12, 2024</small>
-                    </div>
-                    <div class="stars text-warning mt-1">
-                        ★★★★☆
-                    </div>
-                    <p class="mt-2" style="color: #1a2a5a;">Amazing guide! It helped me plan my trip to Europe
-                        seamlessly. Highly recommend!</p>
-                </div>
-
-
-                <div class="review mb-4 p-3 border-bottom">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0" style="color: #1a2a5a;">Jane Smith</h5>
-                        <small class="text-muted">November 10, 2024</small>
-                    </div>
-                    <div class="stars text-warning mt-1">
-                        ★★★★★
-                    </div>
-                    <p class="mt-2" style="color: #1a2a5a;">The tips and routes shared on this website are fantastic.
-                        Can't wait to explore more!</p>
-                </div>
-
-
-                <div class="review mb-4 p-3 border-bottom">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0" style="color: #1a2a5a;">Michael Brown</h5>
-                        <small class="text-muted">November 8, 2024</small>
-                    </div>
-                    <div class="stars text-warning mt-1">
-                        ★★★☆☆
-                    </div>
-                    <p class="mt-2" style="color: #1a2a5a;">Good resource, but I would like to see more detailed routes
-                        for Asia. Otherwise, great work!</p>
-                </div>
-
-
-                <div class="review mb-4 p-3 border-bottom">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0" style="color: #1a2a5a;">Emily Davis</h5>
-                        <small class="text-muted">November 7, 2024</small>
-                    </div>
-                    <div class="stars text-warning mt-1">
-                        ★★★★☆
-                    </div>
-                    <p class="mt-2" style="color: #1a2a5a;">Very helpful! The tips for budgeting during travel are
-                        especially useful. Keep it up!</p>
-                </div>
-            </div>
-
-
-            <div class="review-form mt-4 p-4 rounded" style="background-color: #1a2a5a; color: white;">
-                <h3 class="mb-3">Write a Review</h3>
+        <div class="container mt-7 blurred-background">
+            <div class="review-form">
+                <h3 style="text-shadow: #333;">Write a Review</h3>
                 <form id="reviewForm">
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Your Name</label>
+                    <div class="form-group">
+                        <label for="username">Your Name</label>
                         <input type="text" id="username" class="form-control" placeholder="Enter your name" required>
                     </div>
-                    <div class="mb-3">
-                        <label for="stars" class="form-label">Rating</label>
-                        <select id="stars" class="form-select" required>
+                    <div class="form-group">
+                        <label for="stars">Rating</label>
+                        <select id="stars" class="form-control" required>
                             <option value="5">★★★★★</option>
                             <option value="4">★★★★☆</option>
                             <option value="3">★★★☆☆</option>
@@ -391,13 +416,26 @@
                             <option value="1">★☆☆☆☆</option>
                         </select>
                     </div>
-                    <div class="mb-3">
-                        <label for="reviewText" class="form-label">Your Review</label>
+                    <div class="form-group">
+                        <label for="reviewText">Your Review</label>
                         <textarea id="reviewText" class="form-control" rows="3" placeholder="Write your review..."
                             required></textarea>
                     </div>
-                    <button type="submit" class="btn btn-light">Submit Review</button>
+                    <button type="submit" class="btn btn-primary">Submit Review</button>
                 </form>
+            </div>
+    
+            <div class="reviews-container">
+                <h2 class="display-5 text-center mb-4" style="color: #1a2a5a;">User Reviews</h2>
+                <div id="reviews" class="border p-4 rounded" style="background-color: #f8f9fa; max-height: 400px; overflow-y: auto;">
+                    <!-- Reviews will be dynamically added here -->
+                </div>
+                <div class="pagination">
+                    <button id="prevPage" disabled>Previous</button>
+                    <button id="nextPage">Next</button>
+                </div>
+            </div>
+        </div>
                 <script>
 
                     document.getElementById('reviewForm').addEventListener('submit', function (e) {
@@ -437,7 +475,6 @@
                     </p>
                 </div>
 
-
                 <div class="col-md-6 mb-3 d-flex flex-column align-items-center">
                     <h5>Contact Us</h5>
                     <ul class="list-unstyled d-flex justify-content-center mb-0">
@@ -454,7 +491,6 @@
                     </ul>
                 </div>
 
-
                 <div class="col-md-6 mb-3 d-flex flex-column align-items-center">
                     <h5>Follow us on:</h5>
                     <div class="d-flex justify-content-center">
@@ -469,13 +505,11 @@
             </div>
         </div>
 
-
         <div class="container px-0 text-center mt-5">
             <p class="text-dark" style="font-size: 15px; font-weight: bold;">
                 Mulkulanova Lada, Nurlybayeva Kamila
             </p>
         </div>
-
 
         <div class="container text-center mt-2">
             <p class="text-center text-muted" style="margin-bottom: 0;"></p>
@@ -483,7 +517,6 @@
             </p>
         </div>
     </footer>
-
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <script>
@@ -496,7 +529,73 @@
                 header.classList.remove('scrolled');
             }
         });
-    </script>
 
+        let currentPage = 1;
+        const limit = 6;
+
+        async function loadReviews(page = 1) {
+            const response = await fetch(`http://localhost:5000/api/reviews?page=${page}&limit=${limit}`);
+            const data = await response.json();
+
+            const reviewsContainer = document.getElementById('reviews');
+            reviewsContainer.innerHTML = '';
+
+            data.reviews.forEach(review => {
+                const reviewElement = document.createElement('div');
+                reviewElement.classList.add('review');
+                reviewElement.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0" style="color: #1a2a5a;">${review.username}</h5>
+                        <small class="text-muted">${new Date(review.createdAt).toLocaleDateString()}</small>
+                    </div>
+                    <div class="stars text-warning mt-1">
+                        ${'★'.repeat(review.stars)}${'☆'.repeat(5 - review.stars)}
+                    </div>
+                    <p class="mt-2" style="color: #1a2a5a;">${review.reviewText}</p>
+                `;
+                reviewsContainer.appendChild(reviewElement);
+            });
+
+            document.getElementById('prevPage').disabled = data.currentPage <= 1;
+            document.getElementById('nextPage').disabled = data.currentPage >= data.totalPages;
+        }
+
+        document.getElementById('reviewForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const stars = document.getElementById('stars').value;
+            const reviewText = document.getElementById('reviewText').value;
+
+            const response = await fetch('http://localhost:5000/api/reviews', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, stars, reviewText })
+            });
+
+            if (response.ok) {
+                loadReviews(currentPage);
+                document.getElementById('reviewForm').reset();
+            } else {
+                alert('Failed to submit review');
+            }
+        });
+
+        document.getElementById('prevPage').addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                loadReviews(currentPage);
+            }
+        });
+
+        document.getElementById('nextPage').addEventListener('click', () => {
+            currentPage++;
+            loadReviews(currentPage);
+        });
+
+        loadReviews();
+        
+    </script>
 
 </html>

@@ -5,7 +5,8 @@ const userSchema = new mongoose.Schema({
     password: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     role: { type: String, enum: ['admin', 'guest'], default: 'guest' },
-    code: { type: String }
+    code: { type: String },
+    sessionToken: { type: String } // Добавлено поле для хранения токена сессии
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);
