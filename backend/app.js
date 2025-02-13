@@ -1,5 +1,6 @@
 const express = require('express');
 const connectDB = require('./database/mongo_connection');
+const path = require('path');
 const userRoutes = require('./routes/userRoutes');
 const adminRoutes = require('./routes/admin');
 const reviewRoutes = require('./routes/reviewRoutes');
@@ -27,9 +28,12 @@ app.use(
     })
   );
 
+// Serve static files from the public folder
+app.use(express.static(path.join(__dirname, '../public')));
+
 // Route for root URL
 app.get('/', (req, res) => {
-  res.send('Welcome to the Travel Guide API');
+  res.sendFile(path.join(__dirname, '../public', 'index.html'));
 });
 
 const PORT = process.env.PORT || 5000;
