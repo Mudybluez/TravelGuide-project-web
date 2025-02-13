@@ -196,7 +196,7 @@
             return;
         }
 
-        const response = await fetch('http://localhost:5000/api/auth/me', {
+        const response = await fetch('https://travelguide-project-web.onrender.com/api/auth/me', {
             headers: {
                 'Authorization': token
             }
@@ -222,7 +222,7 @@
 
     async function loadAdminData() {
         try {
-            const usersResponse = await fetch('http://localhost:5000/api/admin/users', {
+            const usersResponse = await fetch('https://travelguide-project-web.onrender.com/api/admin/users', {
                 headers: { 'Authorization': localStorage.getItem('token') }
             });
             if (!usersResponse.ok) {
@@ -230,7 +230,7 @@
             }
             const users = await usersResponse.json();
 
-            const reviewsResponse = await fetch('http://localhost:5000/api/admin/reviews', {
+            const reviewsResponse = await fetch('https://travelguide-project-web.onrender.com/api/admin/reviews', {
                 headers: { 'Authorization': localStorage.getItem('token') }
             });
             if (!reviewsResponse.ok) {
@@ -287,7 +287,7 @@
 
         if (tableId === 'users-table') {
             // Fetch user data and populate form for editing
-            const response = await fetch(`http://localhost:5000/api/admin/users/${id}`, {
+            const response = await fetch(`https://travelguide-project-web.onrender.com/api/admin/users/${id}`, {
                 headers: { 'Authorization': localStorage.getItem('token') }
             });
             const user = await response.json();
@@ -299,7 +299,7 @@
             console.log(`Edit user with id: ${id}`, user);
         } else if (tableId === 'reviews-table') {
             // Fetch review data and populate form for editing
-            const response = await fetch(`http://localhost:5000/api/admin/reviews/${id}`, {
+            const response = await fetch(`https://travelguide-project-web.onrender.com/api/admin/reviews/${id}`, {
                 headers: { 'Authorization': localStorage.getItem('token') }
             });
             if (!response.ok) {
@@ -323,7 +323,7 @@
 
         if (tableId === 'users-table') {
             // Delete user
-            const response = await fetch(`http://localhost:5000/api/admin/users/${id}`, {
+            const response = await fetch(`https://travelguide-project-web.onrender.com/api/admin/users/${id}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': localStorage.getItem('token') }
             });
@@ -334,7 +334,7 @@
             }
         } else if (tableId === 'reviews-table') {
             // Delete review
-            const response = await fetch(`http://localhost:5000/api/admin/reviews/${id}`, {
+            const response = await fetch(`https://travelguide-project-web.onrender.com/api/admin/reviews/${id}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': localStorage.getItem('token') }
             });
@@ -356,7 +356,7 @@
         const userData = { username, email, password, role };
 
         const method = id ? 'PUT' : 'POST';
-        const url = id ? `http://localhost:5000/api/admin/users/${id}` : 'http://localhost:5000/api/admin/users';
+        const url = id ? `https://travelguide-project-web.onrender.com/api/admin/users/${id}` : 'https://travelguide-project-web.onrender.com/api/admin/users';
 
         const response = await fetch(url, {
             method,
@@ -389,7 +389,7 @@
         const reviewData = { cityOrCountry, rating, description, user };
 
         const method = id ? 'PUT' : 'POST';
-        const url = id ? `http://localhost:5000/api/admin/reviews/${id}` : 'http://localhost:5000/api/admin/reviews';
+        const url = id ? `https://travelguide-project-web.onrender.com/api/admin/reviews/${id}` : 'https://travelguide-project-web.onrender.com/api/admin/reviews';
 
         const response = await fetch(url, {
             method,
