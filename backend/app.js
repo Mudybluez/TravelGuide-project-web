@@ -30,6 +30,14 @@ app.use(
 
 const PORT = process.env.PORT || 5000;
 
+app.use((req, res, next) => {
+  res.setHeader(
+      "Content-Security-Policy",
+      "default-src 'self'; font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com;"
+  );
+  next();
+});
+
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on port ${PORT}`);
 });
