@@ -37,9 +37,12 @@
                     <label for="login-password">Password</label>
                 </div>
                 <button type="submit">Login</button>
+                <div class="signUp-link">
+                    <p>Don't have an account?<a href="#" class="signUpBtn-link">Sign up</a></p>
+                </div>
             </form>
         </div>
-        <div class="form-wrapper sign-up">
+        <div class="form-wrapper sign-up" style="display: none;">
             <form id="registerForm" action="#">
                 <h2>Sign up</h2>
                 <div class="input-group">
@@ -55,6 +58,9 @@
                     <label for="register-password">Password</label>
                 </div>
                 <button type="submit">Sign up</button>
+                <div class="signIn-link">
+                    <p>Already have an account?<a href="#" class="signInBtn-link">Sign In</a></p>
+                </div>
             </form>
             <form id="verifyCodeForm" action="#" style="display:none;">
                 <h2>Verify Code</h2>
@@ -72,7 +78,19 @@
     </div>
     <script>
         const apiUrl = "https://travelguide-project-web.onrender.com";
-        
+
+        document.querySelector('.signUpBtn-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector('.sign-in').style.display = 'none';
+            document.querySelector('.sign-up').style.display = 'block';
+        });
+
+        document.querySelector('.signInBtn-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector('.sign-up').style.display = 'none';
+            document.querySelector('.sign-in').style.display = 'block';
+        });
+
         document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const email = document.getElementById('login-email').value;
