@@ -27,6 +27,10 @@ app.use(
     })
   );
 
+// Route for root URL
+app.get('/', (req, res) => {
+  res.send('Welcome to the Travel Guide API');
+});
 
 const PORT = process.env.PORT || 5000;
 
