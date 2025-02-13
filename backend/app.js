@@ -29,11 +29,11 @@ app.use(
   );
 
 // Serve static files from the public folder
-app.use(express.static(path.join(__dirname, '../public/frontend')));
+app.use(express.static(path.join(__dirname, '../frontend')));
 
 // Route for root URL
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/frontend', 'homepage.html'));
+  res.sendFile(path.join(__dirname, '../frontend/homepage.html'));
 });
 
 const PORT = process.env.PORT || 5000;
@@ -41,10 +41,11 @@ const PORT = process.env.PORT || 5000;
 app.use((req, res, next) => {
   res.setHeader(
       "Content-Security-Policy",
-      "default-src 'self'; font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com;"
+      "default-src 'self'; font-src 'self' data: https://fonts.googleapis.com https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;"
   );
   next();
 });
+
 
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on port ${PORT}`);
