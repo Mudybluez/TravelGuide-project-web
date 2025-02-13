@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&family=Poppins:wght@400;500&display=swap");
 
         body {
-    background-image:url(./images/wallp2.jpg); 
+    background-image:url(/images/wallp2.jpg); 
     background-size: cover;
     background-position: center;
     font-family: 'Montserrat', 'Poppins', sans-serif; 
