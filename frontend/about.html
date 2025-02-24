@@ -437,29 +437,80 @@
             </div>
         </div>
                 <script>
+                    const apiUrl = "https://travelguide-project-web.onrender.com";
 
-                    document.getElementById('reviewForm').addEventListener('submit', function (e) {
+                    async function loadReviews(page = 1) {
+                        const response = await fetch(`${apiUrl}/api/reviews?page=${page}&limit=6`);
+                        const data = await response.json();
+                    
+                        const reviewsContainer = document.getElementById('reviews');
+                        reviewsContainer.innerHTML = '';
+                    
+                        data.reviews.forEach(review => {
+                            const reviewElement = document.createElement('div');
+                            reviewElement.classList.add('review');
+                            reviewElement.innerHTML = `
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h5 class="mb-0" style="color: #1a2a5a;">${review.username}</h5>
+                                    <small class="text-muted">${new Date(review.createdAt).toLocaleDateString()}</small>
+                                </div>
+                                <div class="stars text-warning mt-1">
+                                    ${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}
+                                </div>
+                                <p class="mt-2" style="color: #1a2a5a;">${review.reviewText}</p>
+                            `;
+                            reviewsContainer.appendChild(reviewElement);
+                        });
+                    
+                        document.getElementById('prevPage').disabled = data.currentPage <= 1;
+                        document.getElementById('nextPage').disabled = data.currentPage >= data.totalPages;
+                    }
+                    
+                    document.getElementById('reviewForm').addEventListener('submit', async function (e) {
                         e.preventDefault();
-                        const username = document.getElementById('username').value;
-                        const stars = document.getElementById('stars').value;
+                    
+                        const token = localStorage.getItem('accessToken');
+                        if (!token) {
+                            alert('You are not authorized. Please log in.');
+                            window.location.href = 'login.html';
+                            return;
+                        }
+                    
+                        const cityOrCountry = document.getElementById('cityOrCountry').value;
+                        const rating = document.getElementById('rating').value;
                         const reviewText = document.getElementById('reviewText').value;
-                        const reviewsContainer = document.querySelector('.reviews-container');
-                        const newReview = document.createElement('div');
-                        newReview.classList.add('review', 'mb-4', 'p-3', 'border-bottom');
-                        newReview.innerHTML = `
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0" style="color: #1a2a5a;">${username}</h5>
-                        <small class="text-muted">${new Date().toLocaleDateString()}</small>
-                    </div>
-                    <div class="stars text-warning mt-1">
-                        ${'★'.repeat(stars)}${'☆'.repeat(5 - stars)}
-                    </div>
-                    <p class="mt-2" style="color: #1a2a5a;">${reviewText}</p>
-                `;
-                        reviewsContainer.prepend(newReview);
-
-                        document.getElementById('reviewForm').reset();
+                    
+                        const response = await fetch(`${apiUrl}/api/reviews`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${token}`
+                            },
+                            body: JSON.stringify({ cityOrCountry, rating, reviewText })
+                        });
+                    
+                        if (response.ok) {
+                            loadReviews(currentPage);
+                            document.getElementById('reviewForm').reset();
+                        } else {
+                            alert('Failed to submit review');
+                        }
                     });
+                    
+                    document.getElementById('prevPage').addEventListener('click', () => {
+                        if (currentPage > 1) {
+                            currentPage--;
+                            loadReviews(currentPage);
+                        }
+                    });
+                    
+                    document.getElementById('nextPage').addEventListener('click', () => {
+                        currentPage++;
+                        loadReviews(currentPage);
+                    });
+                    
+                    loadReviews();
+                    
                 </script>
             </div>
         </div>
