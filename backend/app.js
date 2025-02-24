@@ -22,11 +22,6 @@ app.use('/api/auth', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/reviews', reviewRoutes);
-app.use(
-    cors({
-      origin: '*',
-    })
-  );
 
 // Serve static files from the public folder
 app.use(express.static(path.join(__dirname, '../frontend')));
@@ -45,7 +40,6 @@ app.use((req, res, next) => {
   );
   next();
 });
-
 
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on port ${PORT}`);
