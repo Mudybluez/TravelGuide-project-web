@@ -6,7 +6,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 exports.getAllReviews = async (req, res) => {
     const { page = 1, limit = 6 } = req.query;
     try {
-        const reviews = await Review.find()
+        const reviews = await Review.find({ user: { $ne: null } })
             .populate('user', 'username')
             .limit(limit * 1)
             .skip((page - 1) * limit)
