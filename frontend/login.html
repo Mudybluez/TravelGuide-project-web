@@ -91,75 +91,64 @@
     <script>
         const apiUrl = "https://travelguide-project-web.onrender.com";
 
-document.querySelector('.signUpBtn-link').addEventListener('click', function(e) {
-    e.preventDefault();
-    document.querySelector('.sign-in').style.display = 'none';
-    document.querySelector('.sign-up').style.display = 'block';
-});
-
-document.querySelector('.signInBtn-link').addEventListener('click', function(e) {
-    e.preventDefault();
-    document.querySelector('.sign-up').style.display = 'none';
-    document.querySelector('.sign-in').style.display = 'block';
-});
-
-document.getElementById('loginForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const email = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
-    const response = await fetch(`${apiUrl}/api/auth/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
+        const response = await fetch(`${apiUrl}/api/auth/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+        });
+        const data = await response.json();
+        if (response.ok) {
+            localStorage.setItem('accessToken', data.accessToken);
+            localStorage.setItem('refreshToken', data.refreshToken);
+            window.location.href = data.role === 'admin' ? 'admin.html' : 'homepage.html';
+        } else {
+            alert('Login failed: ' + data.error);
+        }
     });
-    const data = await response.json();
-    if (response.ok) {
-        localStorage.setItem('accessToken', data.accessToken);
-        localStorage.setItem('refreshToken', data.refreshToken);
-        window.location.href = data.role === 'admin' ? 'admin.html' : 'homepage.html';
-    } else {
-        alert('Login failed: ' + data.error);
-    }
-});
 
-document.getElementById('registerForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const username = document.getElementById('register-username').value;
-    const email = document.getElementById('register-email').value;
-    const password = document.getElementById('register-password').value;
-    const response = await fetch(`${apiUrl}/api/auth/register`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, email, password })
+    document.getElementById('registerForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const username = document.getElementById('register-username').value;
+        const email = document.getElementById('register-email').value;
+        const password = document.getElementById('register-password').value;
+        const response = await fetch(`${apiUrl}/api/auth/register`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, email, password })
+        });
+        const data = await response.json();
+        if (data.message) {
+            alert('Check your email for a verification code.');
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('verifyCodeForm').style.display = 'block';
+            document.getElementById('verify-email').value = email;
+        } else {
+            alert('Registration failed: ' + data.error);
+        }
     });
-    const data = await response.json();
-    if (data.message) {
-        alert('Check your email for a verification code.');
-        document.getElementById('registerForm').style.display = 'none';
-        document.getElementById('verifyCodeForm').style.display = 'block';
-        document.getElementById('verify-email').value = email;
-    } else {
-        alert('Registration failed: ' + data.error);
-    }
-});
 
-document.getElementById('verifyCodeForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const email = document.getElementById('verify-email').value;
-    const code = document.getElementById('verify-code').value;
-    const response = await fetch(`${apiUrl}/api/auth/verify-code`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, code })
+    document.getElementById('verifyCodeForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const email = document.getElementById('verify-email').value;
+        const code = document.getElementById('verify-code').value;
+        const response = await fetch(`${apiUrl}/api/auth/verify-code`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, code })
+        });
+        const data = await response.json();
+        if (data.accessToken) {
+            localStorage.setItem('accessToken', data.accessToken);
+            localStorage.setItem('refreshToken', data.refreshToken);
+            window.location.href = data.role === 'admin' ? 'admin.html' : 'homepage.html';
+        } else {
+            alert('Invalid code');
+        }
     });
-    const data = await response.json();
-    if (data.token) {
-        localStorage.setItem('token', `Bearer ${data.token}`);
-        window.location.href = data.role === 'admin' ? 'admin.html' : 'homepage.html';
-    } else {
-        alert('Invalid code');
-    }
-});
     </script>
     <script src="js/script.js"></script>
 </body>
