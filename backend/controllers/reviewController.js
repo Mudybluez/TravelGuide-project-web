@@ -7,7 +7,7 @@ exports.getAllReviews = async (req, res) => {
     const { page = 1, limit = 6 } = req.query;
     try {
         const reviews = await Review.find()
-            .populate('user')
+            .populate('username', 'email')
             .limit(limit * 1)
             .skip((page - 1) * limit)
             .exec();
