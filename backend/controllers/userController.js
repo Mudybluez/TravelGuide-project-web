@@ -2,7 +2,7 @@ const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 
 // Получить список всех пользователей
-exports.getAllUsers = async (req, res) => {
+const getAllUsers = async (req, res) => {
   try {
     const users = await User.find();
     res.status(200).json(users);
@@ -12,7 +12,7 @@ exports.getAllUsers = async (req, res) => {
 };
 
 // Создать нового пользователя
-exports.createUser = async (req, res) => {
+const createUser = async (req, res) => {
   try {
     const { username, password, email, role } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -25,7 +25,7 @@ exports.createUser = async (req, res) => {
 };
 
 // Обновить пользователя
-exports.updateUser = async (req, res) => {
+const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
     const { password, ...updateData } = req.body;
@@ -37,12 +37,13 @@ exports.updateUser = async (req, res) => {
     const updatedUser = await User.findByIdAndUpdate(id, updateData, { new: true });
     res.status(200).json(updatedUser);
   } catch (err) {
+    console.error(err);
     res.status(400).json({ error: err.message });
   }
 };
 
 // Удалить пользователя
-exports.deleteUser = async (req, res) => {
+const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
     await User.findByIdAndDelete(id);
@@ -51,7 +52,7 @@ exports.deleteUser = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
-exports.getProfile = async (req, res) => {
+const getProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password');
     if (!user) return res.status(404).json({ error: 'User not found' });
@@ -61,17 +62,21 @@ exports.getProfile = async (req, res) => {
   }
 };
 
-exports.updateProfile = async (req, res) => {
+const updateProfile = async (req, res) => {
   try {
     const { username, password } = req.body;
     const updateData = {};
 
-    if (username) updateData.username = username;
-    if (password) updateData.password = await bcrypt.hash(password, 10);
-
+    if (username) updateData.username = String(username);
+    if (password) updateData.password = String(await bcrypt.hash(password, 10));
+    console.log("Changing user data to", updateData);
     const updatedUser = await User.findByIdAndUpdate(req.user.id, updateData, { new: true }).select('-password');
+    console.log("Updated user:", updatedUser);
     res.json(updatedUser);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    console.error(err);
+    res.status(400).json({ error: err.message, user: req.user });
   }
 };
+
+module.exports = { updateProfile, getAllUsers, createUser, updateUser, deleteUser, getProfile }

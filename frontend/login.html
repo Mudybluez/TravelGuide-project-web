@@ -89,7 +89,13 @@
     </div>
     
     <script>
-    const apiUrl = "https://travelguide-project-web.onrender.com";
+    const apiUrl = "";
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        if (localStorage.getItem('accessToken')) {
+            window.location.href = 'homepage.html';
+        }
+    });
 
     document.getElementById('loginForm').addEventListener('submit', async function(e) {
         e.preventDefault();

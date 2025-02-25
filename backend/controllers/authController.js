@@ -3,6 +3,9 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const User = require('../models/user');
 
+
+const JWT_SECRET = process.env.JWT_SECRET || 'secret';
+
 // Настройка nodemailer
 const transporter = nodemailer.createTransport({
     host: 'smtp.mail.ru',
@@ -59,8 +62,9 @@ exports.login = async (req, res) => {
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) return res.status(401).json({ error: 'Invalid credentials' });
 
-        const accessToken = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '15m' });
-        const refreshToken = jwt.sign({ id: user._id }, process.env.JWT_REFRESH_SECRET, { expiresIn: '7d' });
+        console.log(`Generating tokens with secret: ${JWT_SECRET}`)
+        const accessToken = jwt.sign({ id: user._id, role: user.role }, JWT_SECRET, { expiresIn: '15m' });
+        const refreshToken = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '7d', algorithm: 'HS256' });
         user.sessionToken = refreshToken;
         await user.save();
 
@@ -89,7 +93,7 @@ exports.refreshToken = async (req, res) => {
             return res.status(401).json({ error: 'Invalid session' });
         }
 
-        const accessToken = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '15m' });
+        const accessToken = jwt.sign({ id: user._id, role: user.role }, JWT_SECRET, { expiresIn: '15m' });
         res.json({ accessToken });
     } catch (error) {
         res.status(400).json({ error: 'Invalid token' });
