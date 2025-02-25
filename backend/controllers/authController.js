@@ -2,7 +2,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const User = require('../models/user');
-const { verifyToken } = require('../middleware/auth');
 
 // Настройка nodemailer
 const transporter = nodemailer.createTransport({
@@ -74,13 +73,19 @@ exports.login = async (req, res) => {
 
 // Обновление токена
 exports.refreshToken = async (req, res) => {
-    const { refreshToken } = req.body;
+    const refreshToken = req.headers.authorization?.split(' ')[1];
+
     if (!refreshToken) return res.status(401).json({ error: 'Access denied' });
 
     try {
         const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
         const user = await User.findById(decoded.id);
-        if (!user || user.sessionToken !== refreshToken) {
+
+        // Логирование токенов для отладки
+        console.log("Received refreshToken:", refreshToken);
+        console.log("User sessionToken:", user?.sessionToken);
+
+        if (!user || !user.sessionToken || user.sessionToken !== refreshToken) {
             return res.status(401).json({ error: 'Invalid session' });
         }
 

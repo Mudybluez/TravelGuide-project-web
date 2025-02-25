@@ -5,6 +5,7 @@ const userRoutes = require('./routes/userRoutes');
 const adminRoutes = require('./routes/admin');
 const reviewRoutes = require('./routes/reviewRoutes');
 const authRoutes = require('./routes/auth');
+const quizRoutes = require("./routes/quizRoutes");
 const cors = require('cors');
 
 const app = express();
@@ -18,11 +19,11 @@ app.use(cors());
 connectDB();
 
 // Routes
-app.use('/api/auth', userRoutes);
+app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/reviews', reviewRoutes);
-
+app.use("/api/quiz", quizRoutes);
 // Serve static files from the public folder
 app.use(express.static(path.join(__dirname, '../frontend')));
 

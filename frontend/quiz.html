@@ -234,6 +234,7 @@
             }
         }
     </style>
+     <script defer src="js/quiz.js"></script>
 </head>
 
 <body>
@@ -253,34 +254,12 @@
         </ul>
     </header>
 
-    <div class="card-container">
-        <div class="card">
-            <img src="./images/00.jpg">
-            <div class="card-content">
-                <h3>Famous Landmarks</h3>
-                <p>Test your knowledge of iconic landmarks and wonders of the world. From the Eiffel Tower to ancient
-                    cities, explore the places that make every traveler’s bucket list.</p>
-                <a href="famouslandmakers.html" class="btn">Start</a>
-            </div>
-        </div>
-        <div class="card">
-            <img src="./images/p.jpg">
-            <div class="card-content">
-                <h3>Travel Essentials</h3>
-                <p>Being prepared is the key to a great journey! This quiz covers what you need to know to pack smart,
-                    navigate airports, and make your trip stress-free.</p>
-                <a href="travelessentials.html" class="btn">Start</a>
-            </div>
-        </div>
-        <div class="card">
-            <img src="./images/people.jpg">
-            <div class="card-content">
-                <h3>Cultural Awareness</h3>
-                <p>Traveling isn’t just about visiting places; it’s about understanding and respecting cultures. Test
-                    your knowledge of customs, traditions, and unique cultural practices from around the globe.</p>
-                <a href="culturalawarness.html" class="btn">Start</a>
-            </div>
-        </div>
+    <div class="container mt-5">
+        <h1 class="text-center">Quiz</h1>
+        <div id="quiz" class="mt-4"></div>
+        <button id="next-btn" class="btn btn-primary mt-3" style="display: none;">Next</button>
+        <div id="result" class="mt-4" style="display: none;"></div>
+        <button id="restart-btn" class="btn btn-secondary mt-3" style="display: none;">Restart</button>
     </div>
     <footer class="bg-white text-dark py-4">
         <div class="container">
